@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+</style>
+</head>
+<body>
+
+<h2> 
+<nav style="text-align:center;">
+	&#160; Actividad 1: Introducción al formateo css &#160;
+    <a href ="https://www.ips.edu.ar/" target="_blank" ><img src="https://img.sanishtech.com/u/81e9f4937aa8e6ddfea2ea47a47fb04d.jpeg" width="50" height="50" alt="Logo del  poli"> </a> 
+
+</nav> 
+
+</h2>
+
+<table>
+  <tr>
+    <th>Nombre</th>
+    <th>Edad</th>
+    <th>Gmail</th>
+    <th>DNI</th>
+    <th>Imagen</th>
+  </tr>
+    <tr>
+    <td>Abigail Gimbatti Rizzo</td>
+    <td>17</td>
+    <td>justabby1904@gmail.com</td>
+    <td>49271698</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Dante Andreu García</td>
+    <td>17</td>
+    <td>garciadante904@gmail.com</td>
+    <td>51704532</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Dante Rinaldi Torres</td>
+    <td>17</td>
+    <td>danterinalditorres@gmail.com</td>
+    <td>48539467</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Ema Esteves Cabrera</td>
+    <td>18</td>
+    <td>ematina2016@gmail.com</td>
+    <td>47841003</td>
+    <td></td>
+  </tr>
+</table>
+
+</body>
+</html>
