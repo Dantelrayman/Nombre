@@ -16,8 +16,6 @@ nav{
     margin-right: 15px;
 }
 
-/** width="50" height="50"  **/
-
 .logo:hover{
     animation: vibrar 0.2s infinite;
 }
