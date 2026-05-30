@@ -30,9 +30,11 @@ nav{
 
 .foto{
     transition: 0.3s;
-    width: 60px;
-    height: auto;
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
     margin-right: 15px;
+    border-radius: 50%;
 }
 
 .foto:hover{
