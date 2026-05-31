@@ -6,7 +6,7 @@ let ya_exploto = false;
 /*aca basicamente empieza a contar hasta 10 para ver si explota o no, si sacas el mouse entonces se reincia el timer*/
 logo.addEventListener('mouseenter', () => {
     if (ya_exploto) return;
-    timer_explosion = setTimeout(iniciar_explosion, 5000); 
+    timer_explosion = setTimeout(iniciar_explosion, 3000); 
 });
 
 logo.addEventListener('mouseleave', () => {
