@@ -200,9 +200,53 @@
     </button>
 </div>
 
+<!-- FORMULARIO DE CONTACTO -->
+<section class="bg-white m-8 p-6 rounded-lg shadow">
+
+    <h2 class="text-2xl font-bold mb-4 text-center">Formulario de contacto</h2>
+
+    <p class="mb-4 text-gray-700">
+        Contactenos para contarnos su opinion sobre su experiencia sobre esta pagina.
+    </p>
+
+    <div class="grid gap-4">
+
+        <input id="nombre" type="text" placeholder="Apellido y Nombre"
+            class="p-2 border rounded">
+
+        <input id="email" type="email" placeholder="Email"
+            class="p-2 border rounded">
+
+        <input id="whatsapp" type="tel" placeholder="WhatsApp"
+            class="p-2 border rounded">
+
+        <input id="fecha" type="date"
+            class="p-2 border rounded">
+
+        <select id="genero" class="p-2 border rounded">
+            <option value="">Género</option>
+            <option>Masculino</option>
+            <option>Femenino</option>
+            <option>Otro</option>
+        </select>
+
+        <textarea id="comentarios" placeholder="Comentarios"
+            class="p-2 border rounded h-24"></textarea>
+
+        <input type="file" accept="application/pdf"
+            class="p-2 border rounded">
+
+        <button type="button" onclick="sendForm()"
+            class="bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
+            Enviar por email
+        </button>
+
+    </div>
+</section>
+
 <!-- Pie de página --> 
 <footer id="contacto" class="bg-gray-800 text-white text-center p-4"> 
-    © 2026 DinoShop - Contacto: mitienda@gmail.com 
+    © 2026 Mi Tienda Online - Contacto: mitienda@gmail.com 
 </footer>
 
 <script>
@@ -279,6 +323,27 @@ function showInicio() {
 function showProductos() {
     document.getElementById("inicio").classList.add("hidden");
     document.getElementById("productos").style.display = "block";
+}
+function sendForm() {
+    const nombre = document.getElementById("nombre").value;
+    const email = document.getElementById("email").value;
+    const whatsapp = document.getElementById("whatsapp").value;
+    const fecha = document.getElementById("fecha").value;
+    const genero = document.getElementById("genero").value;
+    const comentarios = document.getElementById("comentarios").value;
+
+    const subject = "Formulario DinoShop";
+
+    const body =
+        "Nombre: " + nombre + "%0D%0A" +
+        "Email: " + email + "%0D%0A" +
+        "WhatsApp: " + whatsapp + "%0D%0A" +
+        "Fecha: " + fecha + "%0D%0A" +
+        "Género: " + genero + "%0D%0A" +
+        "Comentarios: " + comentarios;
+
+    window.location.href =
+        "mailto:dinoshoppersonal@gmail.com?subject=" + subject + "&body=" + body;
 }
 </script>
 </body> 
