@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .calc-wrapper {
+    @apply min-h-screen bg-[#202124] flex items-center justify-center p-4 text-white font-sans;
+  }
+  .calc-container {
+    @apply w-full max-w-md bg-[#303134] rounded-2xl p-6 shadow-2xl flex flex-col gap-4;
+  }
+  .calc-display {
+    @apply w-full bg-[#202124] p-4 rounded-xl text-right text-4xl overflow-hidden min-h-[80px] flex items-center justify-end break-all;
+  }
+  .calc-btn {
+    @apply bg-[#3c4043] hover:bg-[#4a4d51] p-4 rounded-lg text-xl transition-colors;
+  }
+  .calc-btn-primario {
+    @apply bg-[#8ab4f8] hover:bg-[#9bbef9] text-gray-900 p-4 rounded-lg text-xl font-bold transition-colors;
+  }
+  .calc-btn-rojito {
+    @apply calc-btn text-red-300;
+  }
+  .calc-btn-gordo {
+    @apply calc-btn col-span-2;
+  }
+}
