@@ -1,4 +1,4 @@
-export const API_BASE_URL = 'http://localhost:3000';
+export const API_BASE_URL = 'http://localhost:3000'; //schujman subi las cosas bien xfa
 
 export const getInscriptos = async () => {
   const response = await fetch(`${API_BASE_URL}/`);
