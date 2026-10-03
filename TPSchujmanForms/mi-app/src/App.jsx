@@ -24,7 +24,7 @@ export default function App() {
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center font-bold text-white shadow-md">
               E
             </div>
-            <span className="text-xl font-bold tracking-tight">Portal Evento</span>
+            <span className="text-xl font-bold tracking-tight">Inscripcion fiesta en la isla de Schujman</span>
           </div>
 
           <div className="flex items-center space-x-4">
