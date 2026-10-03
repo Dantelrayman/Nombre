@@ -22,7 +22,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center font-bold text-white shadow-md">
-              E
+              AADD
             </div>
             <span className="text-xl font-bold tracking-tight">Inscripcion fiesta en la isla de Schujman</span>
           </div>
