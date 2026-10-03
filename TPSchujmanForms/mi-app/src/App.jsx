@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { RegistrationForm } from './components/RegistrationForm';
-import { AdminLogin } from './components/AdminLogin';
-import { AdminPanel } from './components/AdminPanel';
+import { RegistrationForm } from './components/FormDeRegitro';
+import { AdminLogin } from './components/LoginAdmin';
+import { AdminPanel } from './components/PanelAdmin';
 
 export default function App() {
   const [view, setView] = useState('register');
