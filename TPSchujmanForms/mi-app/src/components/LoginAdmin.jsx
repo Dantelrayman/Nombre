@@ -48,7 +48,7 @@ export const LoginAdmin = ({ onLogin, isDarkMode }) => {
               type="text"
               value={grupo}
               onChange={(e) => setGrupo(e.target.value)}
-              placeholder=""
+              placeholder="git o"
               className={`w-full p-3 rounded-xl border outline-none transition focus:ring-1 focus:ring-purple-500 ${inputStyle}`}
               required
             />
