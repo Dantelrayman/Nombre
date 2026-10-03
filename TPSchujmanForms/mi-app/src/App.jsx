@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { RegistrationForm } from './components/FormDeRegitro';
-import { AdminLogin } from './components/LoginAdmin';
-import { AdminPanel } from './components/PanelAdmin';
+import { FormDeRegistro } from './components/FormDeRegistro';
+import { LoginAdmin } from './components/LoginAdmin';
+import { PanelAdmin } from './components/PanelAdmin';
 
 export default function App() {
   const [view, setView] = useState('register');
@@ -67,12 +67,12 @@ export default function App() {
       </header>
 
       <main className="max-w-7xl mx-auto px-4 py-8">
-        {view === 'register' && <RegistrationForm isDarkMode={isDarkMode} />}
+        {view === 'register' && <FormDeRegistro isDarkMode={isDarkMode} />}
         {view === 'admin' && (
           isAdminLoggedIn ? (
-            <AdminPanel onLogout={() => setIsAdminLoggedIn(false)} isDarkMode={isDarkMode} />
+            <PanelAdmin onLogout={() => setIsAdminLoggedIn(false)} isDarkMode={isDarkMode} />
           ) : (
-            <AdminLogin onLogin={() => setIsAdminLoggedIn(true)} isDarkMode={isDarkMode} />
+            <LoginAdmin onLogin={() => setIsAdminLoggedIn(true)} isDarkMode={isDarkMode} />
           )
         )}
       </main>
