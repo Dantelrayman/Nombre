@@ -21,7 +21,7 @@ export default function App() {
       }`}>
         <div className="max-w-7xl mx-auto px-4 py-3 flex flex-col sm:flex-row items-center justify-between gap-3">
           <div className="flex items-center space-x-2 text-center sm:text-left">
-            <div className="w-8 h-8 shrink-0 rounded-lg bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center font-bold text-white shadow-md text-xs">
+            <div className="w-14 h-8 shrink-0 rounded-lg bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center font-bold text-white shadow-md text-xs">
               AADD
             </div>
             <span className="text-sm sm:text-base md:text-lg font-bold tracking-tight line-clamp-1">
