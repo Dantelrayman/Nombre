@@ -20,7 +20,9 @@ export const FormDeRegistro = ({ isDarkMode }) => {
     const { name, value } = e.target;
     let valorProcesado = value;
 
-    if (name === 'documento') {
+    if (name === 'nombre' || name === 'apellido') {
+      valorProcesado = value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '');
+    } else if (name === 'documento') {
       valorProcesado = value.replace(/\D/g, '').slice(0, 8);
     } else if (name === 'celular') {
       valorProcesado = value.replace(/[^\d\s+-]/g, '').slice(0, 15);

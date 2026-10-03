@@ -3,6 +3,7 @@ import { getInscriptos, eliminarInscripto, actualizarInscripto } from '../api';
 
 export const PanelAdmin = ({ onLogout, isDarkMode }) => {
   const [inscriptos, setInscriptos] = useState([]);
+  const [filterField, setFilterField] = useState('todos');
   const [searchTerm, setSearchTerm] = useState('');
   const [cargando, setCargando] = useState(false);
   const [error, setError] = useState('');
@@ -54,12 +55,37 @@ export const PanelAdmin = ({ onLogout, isDarkMode }) => {
   };
 
   const filteredInscriptos = inscriptos.filter((item) => {
-    const term = searchTerm.toLowerCase();
+    const term = searchTerm.trim().toLowerCase();
+    if (!term) return true;
+
+    if (filterField === 'apellido') {
+      return (item.apellido || '').toLowerCase().includes(term);
+    }
+    if (filterField === 'nombre') {
+      return (item.nombre || '').toLowerCase().includes(term);
+    }
+    if (filterField === 'documento') {
+      return (item.documento || '').toString().toLowerCase().includes(term);
+    }
+    if (filterField === 'email') {
+      return (item.email || '').toLowerCase().includes(term);
+    }
+    if (filterField === 'celular') {
+      return (item.celular || '').toString().toLowerCase().includes(term);
+    }
+    if (filterField === 'empresa') {
+      return (item.empresa || '').toLowerCase().includes(term);
+    }
+    if (filterField === 'cargo') {
+      return (item.cargo || '').toLowerCase().includes(term);
+    }
+
     return (
       (item.apellido || '').toLowerCase().includes(term) ||
       (item.nombre || '').toLowerCase().includes(term) ||
       (item.email || '').toLowerCase().includes(term) ||
       (item.documento || '').toString().toLowerCase().includes(term) ||
+      (item.celular || '').toString().toLowerCase().includes(term) ||
       (item.empresa || '').toLowerCase().includes(term) ||
       (item.cargo || '').toLowerCase().includes(term)
     );
@@ -103,21 +129,42 @@ export const PanelAdmin = ({ onLogout, isDarkMode }) => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
         <div className={`p-4 rounded-xl border flex flex-col justify-center ${subCardStyle}`}>
           <span className="text-xs font-semibold uppercase tracking-wider text-purple-400">Total Inscriptos</span>
           <span className="text-2xl font-black mt-1">{inscriptos.length}</span>
         </div>
+        
         <div className={`p-4 rounded-xl border flex flex-col justify-center ${subCardStyle}`}>
           <span className="text-xs font-semibold uppercase tracking-wider text-purple-400">Mostrados en Pantalla</span>
           <span className="text-2xl font-black mt-1">{filteredInscriptos.length}</span>
         </div>
+
         <div className="flex flex-col justify-center">
+          <label className="text-xs font-semibold uppercase tracking-wider text-purple-400 mb-1">Filtrar por</label>
+          <select
+            value={filterField}
+            onChange={(e) => setFilterField(e.target.value)}
+            className={`w-full px-3 py-3 rounded-xl border outline-none transition focus:ring-1 focus:ring-purple-500 cursor-pointer ${inputStyle}`}
+          >
+            <option value="todos" className={isDarkMode ? 'bg-purple-950 text-purple-100' : 'bg-white text-purple-950'}>Todos los campos</option>
+            <option value="apellido" className={isDarkMode ? 'bg-purple-950 text-purple-100' : 'bg-white text-purple-950'}>Apellido</option>
+            <option value="nombre" className={isDarkMode ? 'bg-purple-950 text-purple-100' : 'bg-white text-purple-950'}>Nombre</option>
+            <option value="documento" className={isDarkMode ? 'bg-purple-950 text-purple-100' : 'bg-white text-purple-950'}>Documento (DNI)</option>
+            <option value="email" className={isDarkMode ? 'bg-purple-950 text-purple-100' : 'bg-white text-purple-950'}>Email</option>
+            <option value="celular" className={isDarkMode ? 'bg-purple-950 text-purple-100' : 'bg-white text-purple-950'}>Celular</option>
+            <option value="empresa" className={isDarkMode ? 'bg-purple-950 text-purple-100' : 'bg-white text-purple-950'}>Empresa</option>
+            <option value="cargo" className={isDarkMode ? 'bg-purple-950 text-purple-100' : 'bg-white text-purple-950'}>Cargo</option>
+          </select>
+        </div>
+
+        <div className="flex flex-col justify-center">
+          <label className="text-xs font-semibold uppercase tracking-wider text-purple-400 mb-1">Búsqueda</label>
           <input
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Filtrar por apellido, nombre, email, DNI..."
+            placeholder={`Buscar por ${filterField === 'todos' ? 'cualquier dato' : filterField}...`}
             className={`w-full px-4 py-3 rounded-xl border outline-none transition focus:ring-1 focus:ring-purple-500 ${inputStyle}`}
           />
         </div>
