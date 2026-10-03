@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { inscribirParticipante } from '../api';
 
-export const RegistrationForm = ({ isDarkMode }) => {
+export const FormDeRegistro = ({ isDarkMode }) => {
   const [formData, setFormData] = useState({
     nombre: '',
     apellido: '',
