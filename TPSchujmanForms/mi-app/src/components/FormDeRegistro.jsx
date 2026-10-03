@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { inscribirParticipante } from '../api';
-export const FormDeRegistro = ({ isDarkMode }) => {
+
+export const RegistrationForm = ({ isDarkMode }) => {
   const [formData, setFormData] = useState({
     nombre: '',
     apellido: '',
@@ -56,6 +57,8 @@ export const FormDeRegistro = ({ isDarkMode }) => {
 
     if (!formData.apellido.trim()) {
       nuevosErrores.apellido = 'El apellido es obligatorio.';
+    } else if (formData.apellido.trim().length < 2) {
+      nuevosErrores.apellido = 'El apellido debe tener al menos 2 caracteres.';
     }
 
     const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -145,19 +148,19 @@ export const FormDeRegistro = ({ isDarkMode }) => {
     : 'bg-purple-50/50 border-purple-300 text-purple-950 focus:border-purple-600 focus:ring-purple-600/20 placeholder-purple-400';
 
   return (
-    <div className="w-full flex justify-center py-4">
-      <div className={`flex w-full max-w-xl flex-col rounded-2xl p-8 border transition-colors duration-300 ${cardStyle}`}>
-        <h2 className="mb-2 text-center text-3xl font-bold">
+    <div className="w-full flex justify-center py-2 px-2 sm:px-4">
+      <div className={`w-full max-w-xl rounded-2xl p-5 sm:p-8 border transition-colors duration-300 ${cardStyle}`}>
+        <h2 className="mb-2 text-center text-2xl sm:text-3xl font-bold">
           Formulario de Inscripción
         </h2>
-        <p className={`mb-6 text-center text-sm ${isDarkMode ? 'text-purple-300' : 'text-purple-600'}`}>
+        <p className={`mb-6 text-center text-xs sm:text-sm ${isDarkMode ? 'text-purple-300' : 'text-purple-600'}`}>
           Complete sus datos para registrarse en el evento
         </p>
 
         {enviado ? (
           <div className="flex flex-col items-center justify-center py-8 text-center">
-            <p className="text-lg font-medium text-emerald-500">
-              Inscripción y comprobante enviados con éxito!
+            <p className="text-base sm:text-lg font-medium text-emerald-500">
+              ¡Inscripción y comprobante enviados con éxito!
             </p>
             <button
               onClick={() => {
@@ -181,7 +184,7 @@ export const FormDeRegistro = ({ isDarkMode }) => {
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="flex flex-col gap-4" noValidate>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="flex flex-col gap-1">
                 <label htmlFor="nombre" className="text-sm font-semibold">Nombre *</label>
                 <input
@@ -191,7 +194,7 @@ export const FormDeRegistro = ({ isDarkMode }) => {
                   value={formData.nombre}
                   onChange={handleChange}
                   placeholder="Tu nombre"
-                  className={`rounded-lg border px-3 py-2 outline-none focus:ring-2 transition ${inputStyle} ${errors.nombre ? 'border-rose-500' : ''}`}
+                  className={`rounded-lg border px-3 py-2 text-sm sm:text-base outline-none focus:ring-2 transition ${inputStyle} ${errors.nombre ? 'border-rose-500' : ''}`}
                 />
                 {errors.nombre && <span className="text-xs text-rose-400 font-medium">{errors.nombre}</span>}
               </div>
@@ -205,13 +208,13 @@ export const FormDeRegistro = ({ isDarkMode }) => {
                   value={formData.apellido}
                   onChange={handleChange}
                   placeholder="Tu apellido"
-                  className={`rounded-lg border px-3 py-2 outline-none focus:ring-2 transition ${inputStyle} ${errors.apellido ? 'border-rose-500' : ''}`}
+                  className={`rounded-lg border px-3 py-2 text-sm sm:text-base outline-none focus:ring-2 transition ${inputStyle} ${errors.apellido ? 'border-rose-500' : ''}`}
                 />
                 {errors.apellido && <span className="text-xs text-rose-400 font-medium">{errors.apellido}</span>}
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="flex flex-col gap-1">
                 <label htmlFor="documento" className="text-sm font-semibold">Documento (8 dígitos) *</label>
                 <input
@@ -221,7 +224,7 @@ export const FormDeRegistro = ({ isDarkMode }) => {
                   value={formData.documento}
                   onChange={handleChange}
                   placeholder="00000000"
-                  className={`rounded-lg border px-3 py-2 outline-none focus:ring-2 transition ${inputStyle} ${errors.documento ? 'border-rose-500' : ''}`}
+                  className={`rounded-lg border px-3 py-2 text-sm sm:text-base outline-none focus:ring-2 transition ${inputStyle} ${errors.documento ? 'border-rose-500' : ''}`}
                 />
                 {errors.documento && <span className="text-xs text-rose-400 font-medium">{errors.documento}</span>}
               </div>
@@ -235,7 +238,7 @@ export const FormDeRegistro = ({ isDarkMode }) => {
                   value={formData.celular}
                   onChange={handleChange}
                   placeholder="5493410000000"
-                  className={`rounded-lg border px-3 py-2 outline-none focus:ring-2 transition ${inputStyle} ${errors.celular ? 'border-rose-500' : ''}`}
+                  className={`rounded-lg border px-3 py-2 text-sm sm:text-base outline-none focus:ring-2 transition ${inputStyle} ${errors.celular ? 'border-rose-500' : ''}`}
                 />
                 {errors.celular && <span className="text-xs text-rose-400 font-medium">{errors.celular}</span>}
               </div>
@@ -250,12 +253,12 @@ export const FormDeRegistro = ({ isDarkMode }) => {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="usuario@dominio.com"
-                className={`rounded-lg border px-3 py-2 outline-none focus:ring-2 transition ${inputStyle} ${errors.email ? 'border-rose-500' : ''}`}
+                className={`rounded-lg border px-3 py-2 text-sm sm:text-base outline-none focus:ring-2 transition ${inputStyle} ${errors.email ? 'border-rose-500' : ''}`}
               />
               {errors.email && <span className="text-xs text-rose-400 font-medium">{errors.email}</span>}
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="flex flex-col gap-1">
                 <label htmlFor="empresa" className="text-sm font-semibold">Empresa a la que representa *</label>
                 <input
@@ -265,7 +268,7 @@ export const FormDeRegistro = ({ isDarkMode }) => {
                   value={formData.empresa}
                   onChange={handleChange}
                   placeholder="Nombre de la entidad"
-                  className={`rounded-lg border px-3 py-2 outline-none focus:ring-2 transition ${inputStyle} ${errors.empresa ? 'border-rose-500' : ''}`}
+                  className={`rounded-lg border px-3 py-2 text-sm sm:text-base outline-none focus:ring-2 transition ${inputStyle} ${errors.empresa ? 'border-rose-500' : ''}`}
                 />
                 {errors.empresa && <span className="text-xs text-rose-400 font-medium">{errors.empresa}</span>}
               </div>
@@ -279,7 +282,7 @@ export const FormDeRegistro = ({ isDarkMode }) => {
                   value={formData.cargo}
                   onChange={handleChange}
                   placeholder="Ej. Coordinador"
-                  className={`rounded-lg border px-3 py-2 outline-none focus:ring-2 transition ${inputStyle} ${errors.cargo ? 'border-rose-500' : ''}`}
+                  className={`rounded-lg border px-3 py-2 text-sm sm:text-base outline-none focus:ring-2 transition ${inputStyle} ${errors.cargo ? 'border-rose-500' : ''}`}
                 />
                 {errors.cargo && <span className="text-xs text-rose-400 font-medium">{errors.cargo}</span>}
               </div>
@@ -287,7 +290,7 @@ export const FormDeRegistro = ({ isDarkMode }) => {
 
             <div className="flex flex-col gap-1">
               <span className="text-sm font-semibold">Comprobante de Pago (PDF o JPG) *</span>
-              <label className={`flex flex-col items-center justify-center w-full h-28 border-2 border-dashed rounded-xl cursor-pointer transition p-4 text-center ${
+              <label className={`flex flex-col items-center justify-center w-full min-h-[5.5rem] border-2 border-dashed rounded-xl cursor-pointer transition p-4 text-center ${
                 errors.comprobante
                   ? 'border-rose-500 bg-rose-500/10'
                   : isDarkMode 
