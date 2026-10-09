@@ -14,6 +14,7 @@ export const FormDeRegistro = ({ isDarkMode }) => {
   });
 
   const [errors, setErrors] = useState({});
+  const [generalError, setGeneralError] = useState('');
   const [enviado, setEnviado] = useState(false);
   const [cargando, setCargando] = useState(false);
 
@@ -34,6 +35,9 @@ export const FormDeRegistro = ({ isDarkMode }) => {
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: null }));
     }
+    if (generalError) {
+      setGeneralError('');
+    }
   };
 
   const handleFileChange = (e) => {
@@ -51,14 +55,10 @@ export const FormDeRegistro = ({ isDarkMode }) => {
 
     if (!formData.nombre.trim()) {
       nuevosErrores.nombre = 'El nombre es obligatorio.';
-    } else if (formData.nombre.trim().length < 2) {
-      nuevosErrores.nombre = 'El nombre debe tener al menos 2 caracteres.';
     }
 
     if (!formData.apellido.trim()) {
       nuevosErrores.apellido = 'El apellido es obligatorio.';
-    } else if (formData.apellido.trim().length < 2) {
-      nuevosErrores.apellido = 'El apellido debe tener al menos 2 caracteres.';
     }
 
     const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -70,36 +70,31 @@ export const FormDeRegistro = ({ isDarkMode }) => {
 
     if (!formData.documento.trim()) {
       nuevosErrores.documento = 'El documento es obligatorio.';
-    } else if (formData.documento.length < 8) {
+    } else if (formData.documento.length !== 8) {
       nuevosErrores.documento = 'El documento debe tener exactamente 8 números.';
     }
 
-    const regexCelular = /^\+?\d{8,15}$/;
     const soloNumerosCelular = formData.celular.replace(/\D/g, '');
     if (!formData.celular.trim()) {
       nuevosErrores.celular = 'El celular es obligatorio.';
-    } else if (!regexCelular.test(soloNumerosCelular)) {
-      nuevosErrores.celular = 'Formato inválido (entre 8 y 15 dígitos numéricos).';
+    } else if (soloNumerosCelular.length < 8 || soloNumerosCelular.length > 15) {
+      nuevosErrores.celular = 'El celular debe tener entre 8 y 15 dígitos numéricos.';
     }
 
     if (!formData.empresa.trim()) {
       nuevosErrores.empresa = 'La empresa es obligatoria.';
-    } else if (formData.empresa.trim().length < 2) {
-      nuevosErrores.empresa = 'La empresa debe tener al menos 2 caracteres.';
     }
 
     if (!formData.cargo.trim()) {
       nuevosErrores.cargo = 'El cargo es obligatorio.';
-    } else if (formData.cargo.trim().length < 2) {
-      nuevosErrores.cargo = 'El cargo debe tener al menos 2 caracteres.';
     }
 
     if (!formData.comprobante) {
       nuevosErrores.comprobante = 'Debes adjuntar un comprobante.';
     } else {
-      const tamanoMaximo = 10 * 1024 * 1024;
+      const tamanoMaximo = 5 * 1024 * 1024;
       if (formData.comprobante.size > tamanoMaximo) {
-        nuevosErrores.comprobante = 'El archivo supera el límite de 10 MB.';
+        nuevosErrores.comprobante = 'El archivo supera el límite de 5 MB.';
       }
 
       const extensionesPermitidas = ['application/pdf', 'image/jpeg', 'image/jpg'];
@@ -115,25 +110,32 @@ export const FormDeRegistro = ({ isDarkMode }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setGeneralError('');
 
     if (!handleValidation()) return;
 
     setCargando(true);
     const data = new FormData();
-    data.append('nombre', formData.nombre);
-    data.append('apellido', formData.apellido);
-    data.append('documento', formData.documento);
-    data.append('email', formData.email);
-    data.append('celular', formData.celular);
-    data.append('empresa', formData.empresa);
-    data.append('cargo', formData.cargo);
+    data.append('nombre', formData.nombre.trim());
+    data.append('apellido', formData.apellido.trim());
+    data.append('documento', formData.documento.trim());
+    data.append('email', formData.email.trim());
+    data.append('celular', formData.celular.trim());
+    data.append('empresa', formData.empresa.trim());
+    data.append('cargo', formData.cargo.trim());
     data.append('comprobante', formData.comprobante);
 
     try {
       await inscribirParticipante(data);
       setEnviado(true);
-    } catch {
-      alert('No se pudo conectar con el servidor o procesar la inscripción.');
+    } catch (err) {
+      if (err.status === 409) {
+        setGeneralError('Este documento ya se encuentra registrado en el evento.');
+      } else if (err.status === 400 && err.detalles && err.detalles.errores) {
+        setErrors((prev) => ({ ...prev, ...err.detalles.errores }));
+      } else {
+        setGeneralError('No se pudo conectar con el servidor o procesar la solicitud.');
+      }
     } finally {
       setCargando(false);
     }
@@ -157,6 +159,12 @@ export const FormDeRegistro = ({ isDarkMode }) => {
           Complete sus datos para registrarse en el evento
         </p>
 
+        {generalError && (
+          <div className="mb-4 p-3 rounded-xl text-sm bg-rose-950/50 border border-rose-500 text-rose-300 text-center">
+            {generalError}
+          </div>
+        )}
+
         {enviado ? (
           <div className="flex flex-col items-center justify-center py-8 text-center">
             <p className="text-base sm:text-lg font-medium text-emerald-500">
@@ -166,6 +174,7 @@ export const FormDeRegistro = ({ isDarkMode }) => {
               onClick={() => {
                 setEnviado(false);
                 setErrors({});
+                setGeneralError('');
                 setFormData({
                   nombre: '',
                   apellido: '',
@@ -289,7 +298,7 @@ export const FormDeRegistro = ({ isDarkMode }) => {
             </div>
 
             <div className="flex flex-col gap-1">
-              <span className="text-sm font-semibold">Comprobante de Pago (PDF o JPG) *</span>
+              <span className="text-sm font-semibold">Comprobante de Pago (PDF o JPG, máx 5 MB) *</span>
               <label className={`flex flex-col items-center justify-center w-full min-h-[5.5rem] border-2 border-dashed rounded-xl cursor-pointer transition p-4 text-center ${
                 errors.comprobante
                   ? 'border-rose-500 bg-rose-500/10'

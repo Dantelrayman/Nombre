@@ -1,12 +1,19 @@
 import React, { useState } from 'react';
-import { FormDeRegistro } from './components/FormDeRegistro';
+import { RegistrationForm } from './components/FormDeRegistro';
 import { LoginAdmin } from './components/LoginAdmin';
 import { PanelAdmin } from './components/PanelAdmin';
 
 export default function App() {
   const [view, setView] = useState('register');
-  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
+  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(() => {
+    return !!localStorage.getItem('token');
+  });
   const [isDarkMode, setIsDarkMode] = useState(true);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setIsAdminLoggedIn(false);
+  };
 
   return (
     <div className={`min-h-screen overflow-x-hidden transition-colors duration-300 ${
@@ -21,7 +28,7 @@ export default function App() {
       }`}>
         <div className="max-w-7xl mx-auto px-4 py-3 flex flex-col sm:flex-row items-center justify-between gap-3">
           <div className="flex items-center space-x-2 text-center sm:text-left">
-            <div className="w-14 h-8 shrink-0 rounded-lg bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center font-bold text-white shadow-md text-xs">
+            <div className="w-8 h-8 shrink-0 rounded-lg bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center font-bold text-white shadow-md text-xs">
               AADD
             </div>
             <span className="text-sm sm:text-base md:text-lg font-bold tracking-tight line-clamp-1">
@@ -69,10 +76,10 @@ export default function App() {
       </header>
 
       <main className="max-w-7xl mx-auto px-3 sm:px-4 py-6">
-        {view === 'register' && <FormDeRegistro isDarkMode={isDarkMode} />}
+        {view === 'register' && <RegistrationForm isDarkMode={isDarkMode} />}
         {view === 'admin' && (
           isAdminLoggedIn ? (
-            <PanelAdmin onLogout={() => setIsAdminLoggedIn(false)} isDarkMode={isDarkMode} />
+            <PanelAdmin onLogout={handleLogout} isDarkMode={isDarkMode} />
           ) : (
             <LoginAdmin onLogin={() => setIsAdminLoggedIn(true)} isDarkMode={isDarkMode} />
           )

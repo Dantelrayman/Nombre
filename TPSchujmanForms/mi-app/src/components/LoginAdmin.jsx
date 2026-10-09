@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { loginAdmin } from '../api';
 
 export const LoginAdmin = ({ onLogin, isDarkMode }) => {
   const [grupo, setGrupo] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [cargando, setCargando] = useState(false);
 
   const cardStyle = isDarkMode
     ? 'bg-purple-950/40 border-purple-800 text-purple-100 shadow-2xl'
@@ -13,17 +15,18 @@ export const LoginAdmin = ({ onLogin, isDarkMode }) => {
     ? 'bg-purple-900/30 border-purple-700 text-purple-100 focus:border-purple-400 placeholder-purple-400/50'
     : 'bg-purple-50/50 border-purple-300 text-purple-950 focus:border-purple-600 placeholder-purple-400';
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+    setCargando(true);
 
-    const GRUPO_VALIDO = 'veintidos';
-    const PASSWORD_VALIDA = '22_dos_02';
-
-    if (grupo === GRUPO_VALIDO && password === PASSWORD_VALIDA) {
-      setError('');
+    try {
+      await loginAdmin(grupo.trim(), password.trim());
       onLogin();
-    } else {
-      setError('Grupo o contraseña incorrectos.');
+    } catch (err) {
+      setError(err.message || 'Usuario o contraseña incorrectos.');
+    } finally {
+      setCargando(false);
     }
   };
 
@@ -48,7 +51,7 @@ export const LoginAdmin = ({ onLogin, isDarkMode }) => {
               type="text"
               value={grupo}
               onChange={(e) => setGrupo(e.target.value)}
-              placeholder="Usuario"
+              placeholder="Ej. veintidos"
               className={`w-full p-3 rounded-xl border outline-none transition focus:ring-1 focus:ring-purple-500 ${inputStyle}`}
               required
             />
@@ -60,7 +63,7 @@ export const LoginAdmin = ({ onLogin, isDarkMode }) => {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="###########"
+              placeholder="••••••••"
               className={`w-full p-3 rounded-xl border outline-none transition focus:ring-1 focus:ring-purple-500 ${inputStyle}`}
               required
             />
@@ -68,9 +71,10 @@ export const LoginAdmin = ({ onLogin, isDarkMode }) => {
 
           <button
             type="submit"
-            className="w-full bg-purple-600 text-white p-3 rounded-xl hover:bg-purple-700 transition font-semibold shadow-lg shadow-purple-600/30 cursor-pointer active:bg-purple-800"
+            disabled={cargando}
+            className="w-full bg-purple-600 text-white p-3 rounded-xl hover:bg-purple-700 transition font-semibold shadow-lg shadow-purple-600/30 cursor-pointer active:bg-purple-800 disabled:opacity-50"
           >
-            Ingresar al Sistema
+            {cargando ? 'Iniciando sesión...' : 'Ingresar al Sistema'}
           </button>
         </form>
       </div>
