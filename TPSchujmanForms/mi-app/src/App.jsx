@@ -76,7 +76,7 @@ export default function App() {
       </header>
 
       <main className="max-w-7xl mx-auto px-3 sm:px-4 py-6">
-        {view === 'register' && <RegistrationForm isDarkMode={isDarkMode} />}
+        {view === 'register' && <FormDeRegistro isDarkMode={isDarkMode} />}
         {view === 'admin' && (
           isAdminLoggedIn ? (
             <PanelAdmin onLogout={handleLogout} isDarkMode={isDarkMode} />
