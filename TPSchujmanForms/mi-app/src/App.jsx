@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { RegistrationForm } from './components/FormDeRegistro';
+import { FormDeRegistro } from './components/FormDeRegistro';
 import { LoginAdmin } from './components/LoginAdmin';
 import { PanelAdmin } from './components/PanelAdmin';
 
